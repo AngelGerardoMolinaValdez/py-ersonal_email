@@ -1,62 +1,56 @@
-
-from cryptography.fernet import Fernet
+import cryptocode
 import os
 import sys
-from typing import Tuple, List, Dict, Optional, Any, Callable
-
-
-# def get_key():
-
-
-# def set_key():
-    
-
-
-
-# desencrip = f.decrypt(encrip)
-
-# print("""\n\nStr encriptada: {0}\n\nStr desencriptado: {1}""".format(encrip, desencrip))
+import base64
+from typing import Tuple, List, Dict, Optional, Any, Callable, Union
 
 
 class Builtin:
 
     
     def __init__(self) -> None:
-        self._set_key()
-        self.clave : Any = self._get_key()
-        self.Fernet : Fernet = Fernet(self.clave)
+        pass
 
 
-    def encrypth_text(self, Str : str) -> str:
+    def encrypt_text(self, encrypt :  str) -> str:
+        """ Encripta un mensaje.
 
-        encrypth_text : str = self.Fernet.encrypt(Str.encode())        
+        Arguments:
+        - encrypt : str
+        
+        """
+        encrypt_text : str = cryptocode.encrypt(encrypt,"wow")
+
+        return encrypt_text
+
+
+    def decrypt_text(self, decrypt :  str) -> str:
+        """ Encripta un mensaje.
+
+        Arguments:
+        - encrypt : str
+        
+        """
+        decrypt_text : str = cryptocode.decrypt(decrypt,"wow")
+        
+        return decrypt_text
+
+    
+    def get_type_attach(self, file_name : str) -> Union[str, None]:
+
+        try:
+
+            extension_file : str = file_name.index(".")
+
+            return "MimeImage" if file_name[extension_file+1] in ("png", "jpeg", "jpg") else "MimeText" if file_name[extension_file+1] == "text" else "MimeAplication"
+
+
+        except:
+
+            return "without_attachment"
         
 
-        return encrypth_text
 
 
-    def decrypth_text(self, encrypth_text : str) -> str:
-        self._set_key()
-        self.clave : Any = self._get_key()
-        self.Fernet : Fernet = Fernet(self.clave)
 
-        decrypth_text : str = self.Fernet.decrypt(encrypth_text)
-        
-
-        return decrypth_text
-
-
-    def _set_key(self) -> None:
-
-        self.clave = Fernet.generate_key()
-
-
-        with open("clave.key", "wb") as archivo_clave:
-
-            archivo_clave.write(self.clave)
-    
-
-    def _get_key(self) -> Any:
-    
-        return open("clave.key", "rb").read()
 
