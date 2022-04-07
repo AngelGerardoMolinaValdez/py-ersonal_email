@@ -15,7 +15,7 @@ BASEDIR = os.getcwd()
 sys.path.insert(1, BASEDIR)
 
 
-from libraries.Excel import Excel
+from libraries.ExcelLibrary import ExcelLibrary
 from libraries.Builtin import Builtin
 
 
@@ -27,7 +27,7 @@ def main():
 
 
     funcs : object = Builtin(BASEDIR)
-    excel_workbook : object = Excel()
+    excel_workbook : object = ExcelLibrary()
 
 
     workbook_id : str = excel_workbook.open_excel_document(f"{BASEDIR}\\data\\{DEFAULT_DATA_FILE}", "reading_info_email")
@@ -88,7 +88,7 @@ def main():
     for dir in [BASEDIR, "resources"]: os.chdir(dir)
 
 
-    if type_body_content:
+    if type_body_content == "html":
 
         file_with_format : str = body_content
         body_content = ""
