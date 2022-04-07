@@ -4,8 +4,5 @@
 *.jpeg
 venv
 test.py
-
-*.docx
-*.html
-CommonFunctions.py
-cpython-39.pyc
+resources
+*.pyc
