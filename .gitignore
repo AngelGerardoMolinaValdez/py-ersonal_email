@@ -4,7 +4,7 @@
 *.jpeg
 venv
 test.py
-
+resources
 *.docx
 *.html
 CommonFunctions.py

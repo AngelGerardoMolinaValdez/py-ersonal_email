@@ -50,11 +50,22 @@ from cryptography.fernet import Fernet
 # cipher = encrypt(passkey, str1)
 # print(cipher)
 
-import cryptocode
+# import cryptocode
 
-str_encoded = cryptocode.encrypt("TrabajosAngel Molina","wow")
-## And then to decode it:
-print(str_encoded)
+# str_encoded = cryptocode.encrypt("TrabajosAngel Molina","wow")
+# ## And then to decode it:
+# print(str_encoded)
 
-str_decoded = cryptocode.decrypt(str_encoded,"wow")
-print(str_decoded)
+# str_decoded = cryptocode.decrypt(str_encoded,"wow")
+# print(str_decoded)
+import os
+EXCEDIR = os.getcwd()
+for i in [EXCEDIR, "..", "resources"]: os.chdir(i)
+BASEDIR = os.getcwd()
+format = ""
+with open("index.html", "r") as file:
+    format += str(file.read())
+    lines =file.readlines()
+
+print(format)
+print(lines)

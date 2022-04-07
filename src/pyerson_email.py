@@ -8,15 +8,14 @@ import smtplib
 from os.path import basename
 from email.mime.application import MIMEApplication
 
-
 import os
+from socket import timeout
 import sys
-from typing import Tuple, List, Dict, Optional, Any, Callable
+from typing import List
 
 
 EXCEDIR = os.getcwd()
-os.chdir(EXCEDIR)
-os.chdir("..")
+for i in [EXCEDIR, ".."]: os.chdir(i)
 BASEDIR = os.getcwd()
 sys.path.insert(1, BASEDIR)
 
@@ -43,11 +42,12 @@ def main():
 
 
     host_email : str = excel_workbook.read_excel_cell(1, INIT_COLUMN_DATA, DEFAULT_SHEET)
-    encrypth_password : str = excel_workbook.read_excel_cell(2, INIT_COLUMN_DATA, DEFAULT_SHEET)
-    password = funcs.decrypt_text(encrypth_password)
+    type_format_password : str = excel_workbook.read_excel_cell(2, INIT_COLUMN_DATA, DEFAULT_SHEET)
+    pwd : str = excel_workbook.read_excel_cell(3, INIT_COLUMN_DATA, DEFAULT_SHEET)
+    password = funcs.decrypt_text(pwd) if type_format_password == "encrypted" else pwd
 
 
-    row_data : int = 4
+    row_data : int = 5
     receiver_email : List[str] = [
         excel_workbook.read_excel_cell(row_data, index, DEFAULT_SHEET) 
         for index in range(INIT_COLUMN_DATA, total_columns+1) 
@@ -89,27 +89,29 @@ def main():
     # create message object instance
     email_account : object = MIMEMultipart()
     
-    os.chdir(BASEDIR)
-    os.chdir("data")
+
+    for dir in [BASEDIR, "resources"]: os.chdir(dir)
 
 
-    # with open("index.html", "rb") as file:
-    #     format += str(file.read())
+    if type_body_content:
+
+        file_with_format : str = body_content
+        body_content = ""
+        
+        
+        with open(file_with_format, "r") as file:
+
+            body_content += str(file.read())
 
 
     email_account['From'] = host_email if type(host_email) != None else None
-    
     email_account['To'] = ", ".join(receiver_email) if len(receiver_email) >= 1 else None    
-
     email_account['Subject'] = subject_email if type(subject_email) != None else None
-    
     email_account["Cc"] = ", ".join(cc_email) if len(cc_email) >= 1 else None
+
 
     email_account.add_header('Content-Type','text/html')
 
-    
-    info_email : List[Any] = [email_account['From'], email_account['To'], email_account["Cc"]]
-    me_you_cc : List[Any] = [info for info in info_email if info is not None]
 
     # add in the message body
     email_account.attach(MIMEText(body_content, type_body_content))
@@ -130,15 +132,13 @@ def main():
         
         server.starttls()
     
+    for f in atachaments:  
 
-    # for f in atachaments:  
+        attach = MIMEApplication(open(f, "rb").read())
 
-    #     attach = MIMEApplication(open(f, "rb").read())
-
-    #     attach.add_header('Content-Disposition','attachment', filename=f)
+        attach.add_header('Content-Disposition','attachment', filename=f)
         
-        
-    #     email_account.attach(attach)
+        email_account.attach(attach)
 
 
     # Login Credentials for sending the mail
@@ -146,9 +146,12 @@ def main():
     
     
     # send the message via the server.
-    server.sendmail(*me_you_cc, email_account.as_string())
-    # server.sendmail(email_account['From'], email_account['To'], email_account.as_string())
-    
+    server.sendmail(email_account['From'], email_account['To'], email_account.as_string())
+
+    # if len(cc_email) < 1: 
+    # else:
+        # server.sendmail(email_account['From'], email_account['To'], email_account['Cc'], email_account.as_string())
+
 
     server.quit()
     
