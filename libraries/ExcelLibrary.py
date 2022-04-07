@@ -23,7 +23,7 @@ class NoOpenedDocumentsException(Exception):
     pass
 
 
-class Excel(object):
+class ExcelLibrary(object):
     """Library for working with Excel documents.
 
     == Dependencies ==
