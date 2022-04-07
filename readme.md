@@ -4,6 +4,7 @@ de correos electronicos.
 
 
 <br>
+
 # **Requerimientos**
 1. **[Python 3.6 en adelante (recomendado 3.9)](https://www.python.org/downloads/)**
 2. En la cuenta de email donde seran enviados los correos debe de cambiarse la configuracion de ___Acceso de apps menos seguras___:
@@ -15,6 +16,7 @@ de correos electronicos.
 
 
 <br>
+
 # **Extensiones**
 Para usar este proyecto es necesario tener las siguientes extensiones:
 - **[pip install openpyxl](https://pypi.org/project/openpyxl/)**
@@ -27,6 +29,7 @@ Adicional a las extensiones, el archivo **[ExcelLibrary.py](https://github.com/p
 
 
 <br>
+
 # **Inicio**
 En este apartado se explicara como usar este proyecto.
 
@@ -91,11 +94,15 @@ sido descargado el proyecto y ejecutar el siguiente comando:
 
 
 <br>
+
 # **Recomendaciones**
 1. Se recomienda instalar las dependecias de este proyecto en un entorno virtual para evitar conflictos.
 <code>
     python -m venv venv_pyersona_email
 </code>
+
+<br>
+
 <code>
     py ./venv_pyersona_email/Scripts/activate
 </code>
